@@ -198,7 +198,7 @@ export default function FrontendPage() {
       {modalOpen && (
         <ModalOverlay onClick={handleOverlayClick}>
           <ModalContent>
-            <h2 style={{ color: 'black', marginBottom: 20 }}>Take Wish</h2>
+            <h2 style={{ color: 'black', marginBottom: 20 }}>Take Wish {selectedWish?.title}</h2>
 
             <Input
               type="text"
