@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 // Styled components
 const Container = styled.div`
+  font-family: 'Inknut Antiqua', serif;
   max-width: 700px;
   margin: 40px auto;
   padding: 20px;
@@ -16,8 +17,10 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
+  font-family: 'Inknut Antiqua', serif;
   text-align: center;
   color: #000000ff;
+  margin-bottom: 50px;
 `;
 
 const InfoButton = styled.span`
@@ -36,7 +39,7 @@ const Card = styled.div`
   margin: 10px 0;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(184, 183, 183, 0.1);
-  background: ${(props) => (props.taken ? '#f0979765' : '#e29fb3ff')};
+  background: ${(props) => (props.taken ? "linear-gradient(135deg, #ffe6e6c9, #cec4c4a9, #ac8282bd)" : "linear-gradient(135deg, #e43636af, #f7a7a786, #d3424280)")};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -74,7 +77,15 @@ const ModalContent = styled.div`
   text-align: center;
 `;
 
-const InfoModalContent = styled(ModalContent)``;
+const InfoModalContent = styled(ModalContent)`
+  max-width: 500px;
+
+  @media (max-width: 600px) {
+    max-width: 90%;
+  }
+
+  
+  `;
 
 const Input = styled.input`
   padding: 10px;
@@ -167,13 +178,13 @@ export default function FrontendPage() {
   return (
     <Container>
       <Title>
-        Wishlist
+        Lista de Dorințe 
         <InfoButton onClick={handleInfoClick} title="More Info">
           ℹ️
         </InfoButton>
       </Title>
 
-      {sortedGroupedWishes.length === 0 && <p>No wishes yet!</p>}
+      {sortedGroupedWishes.length === 0 && <p>Înca nu sunt Dorințe!</p>}
 
       {sortedGroupedWishes.map(({ category, wishes }) => (
         <div key={category}>
@@ -183,13 +194,35 @@ export default function FrontendPage() {
               <div>
                 <strong>{w.title}</strong>
                 <br />
-                <small>{w.description}</small>
+                <small style={{flex: "1 1 auto", minWidth: "80%", wordBreak: "break-word"}}>{w.description}</small>
               </div>
               {w.taken ? (
-                <span style={{ color: 'red', fontWeight: 'bold' }}>✔ Taken</span>
+                <span style={{ color: 'red', fontWeight: 'bold' }}>✔Preluat</span>
               ) : (
-                <Button onClick={() => handleTakeWish(w)}>Take</Button>
-              )}
+                <Button 
+                  onClick={() => handleTakeWish(w)}
+                  style={{
+                  padding: "10px 20px",
+                  background: "linear-gradient(135deg, #8beba0ff, #cad6cdff, #62ad68d0)",
+                  color: "#000000ff",
+                  fontWeight: "bold",
+                  border: "none",
+                  borderRadius: 8,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)";
+                }}>
+                  Preia
+                </Button>
+                      )}
             </Card>
           ))}
         </div>
@@ -198,18 +231,18 @@ export default function FrontendPage() {
       {modalOpen && (
         <ModalOverlay onClick={handleOverlayClick}>
           <ModalContent>
-            <h2 style={{ color: 'black', marginBottom: 20 }}>Take Wish {selectedWish?.title}</h2>
+            <h2 style={{ color: 'black', marginBottom: 20 }}>Preia Dorința - {selectedWish?.title}</h2>
 
             <Input
               type="text"
-              placeholder="Your Name"
+              placeholder="Numele Tau"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Input
-                placeholder="Quantity"
+                placeholder="Cantitate"
                 value={quantity}
                 min="1"
               />
@@ -220,8 +253,9 @@ export default function FrontendPage() {
             </div>
 
             <div>
-              <Button onClick={submitTakeWish} disabled={name.trim() === ''} style={{ marginRight: '10px' }}>Submit</Button>
-              <CloseButton onClick={() => setModalOpen(false)}>Cancel</CloseButton>
+              <Button 
+              onClick={submitTakeWish} disabled={name.trim() === ''} style={{ marginRight: '10px' }}>Preia</Button>
+              <CloseButton onClick={() => setModalOpen(false)}>Anulează</CloseButton>
             </div>
           </ModalContent>
         </ModalOverlay>
@@ -230,9 +264,14 @@ export default function FrontendPage() {
       {infoModalOpen && (
         <ModalOverlay>
           <InfoModalContent>
-            <h2>Wish List Information</h2>
-            <p>This is my wish list. Feel free to choose a gift!</p>
-            <CloseButton onClick={() => setInfoModalOpen(false)}>Close</CloseButton>
+            <h2 style={{marginBottom:20}}>Informații despre această listă</h2>
+            <h4 style={{marginBottom:10}}>Draga Familie 💕,</h4>
+            <p>🌸🍼Aceste dorințe sunt mai mult decât simple lucruri - sunt pași mici pentru a ajuta bebelușul nostru să crească puternic, sănătos și iubit de toți în aceste prime luni prețioase🍼🌸</p>.
+             <p> Nu este vorba despre "nu ne permitem" sau altceva...,</p>
+             <p>ci mai degrabă despre faptul că dorim ca</p>
+             <h2>TU</h2>
+             <p> să fii alături de noi împărtășind toate micile bucurii de pe parcurs. 🌙✨</p>
+            <CloseButton onClick={() => setInfoModalOpen(false)}>Am înțeles!</CloseButton>
           </InfoModalContent>
         </ModalOverlay>
       )}
