@@ -75,6 +75,9 @@ const ModalContent = styled.div`
   border-radius: 8px;
   min-width: 300px;
   text-align: center;
+  @media (max-width: 600px) {
+    max-width: 90%;
+  }
 `;
 
 const InfoModalContent = styled(ModalContent)`
@@ -220,7 +223,7 @@ export default function FrontendPage() {
                   e.currentTarget.style.transform = "translateY(0)";
                   e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)";
                 }}>
-                  Preia
+                  PREIA
                 </Button>
                       )}
             </Card>
@@ -245,8 +248,9 @@ export default function FrontendPage() {
                 placeholder="Cantitate"
                 value={quantity}
                 min="1"
-              />
-              <div style={{ display: 'flex', marginLeft: '10px', gap: '5px' }}>
+                style={{ width: '80px', height: '35px' }}
+              /> <h2>Bucăți</h2>
+              <div style={{ display: 'flex', marginLeft: '10px', gap: '5px'}}>
                 <Button onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : prev))} style={{ width: '35px', height: '35px' }}>-</Button>
                 <Button onClick={() => setQuantity((prev) => (prev < 10 ? prev + 1 : prev))} style={{ width: '35px', height: '35px' }}>+</Button>
               </div>
